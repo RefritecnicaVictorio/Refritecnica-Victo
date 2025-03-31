@@ -212,11 +212,8 @@
 </div>
 
 <!-- Scripts necesarios -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        emailjs.init("RDQRuJcpNqK8w0XBt"); // Tu Public Key de EmailJS
-
         document.getElementById("cita-form").addEventListener("submit", function (event) {
             event.preventDefault(); // Evitar recarga de página
 
@@ -224,7 +221,6 @@
 
             const formData = {
                 nombre: form.nombre.value.trim(),
-                correo: form.correo.value.trim(),
                 telefono: form.telefono.value.trim(),
                 servicio: form.servicio.value,
                 fecha: form.fecha.value,
@@ -240,41 +236,30 @@
                 }
             }
 
-            // Enviar a EmailJS
-            emailjs.send("service_jhtasrg", "template_ahkrrcs", formData)
-                .then(function (response) {
-                    console.log("SUCCESS!", response);
+            // Crear mensaje de WhatsApp
+            const mensajeWhatsApp = 
+                `¡Nueva cita solicitada!%0A%0A` +
+                `👤 Nombre: ${formData.nombre}%0A` +
+                `📞 Teléfono: ${formData.telefono}%0A` +
+                `🛠️ Servicio: ${formData.servicio}%0A` +
+                `📅 Fecha: ${formData.fecha}%0A` +
+                `🕒 Hora: ${formData.hora}%0A` +
+                `📍 Ubicación: ${formData.ubicacion}%0A` +
+                `📝 Mensaje: ${formData.mensaje}`;
 
-                    // Crear mensaje de WhatsApp
-                    const mensajeWhatsApp = 
-                        `¡Nueva cita solicitada!%0A%0A` +
-                        `👤 Nombre: ${formData.nombre}%0A` +
-                        `📧 Correo: ${formData.correo}%0A` +
-                        `📞 Teléfono: ${formData.telefono}%0A` +
-                        `🛠️ Servicio: ${formData.servicio}%0A` +
-                        `📅 Fecha: ${formData.fecha}%0A` +
-                        `🕒 Hora: ${formData.hora}%0A` +
-                        `📍 Ubicación: ${formData.ubicacion}%0A` +
-                        `📝 Mensaje: ${formData.mensaje}`;
+            // Redirigir a WhatsApp Web con mensaje
+            const numero = "18093837536";
+            const url = `https://wa.me/${numero}?text=${mensajeWhatsApp}`;
+            window.open(url, "_blank");
 
-                    // Redirigir a WhatsApp Web con mensaje
-                    const numero = "18093837536";
-                    const url = `https://wa.me/${numero}?text=${mensajeWhatsApp}`;
-                    window.open(url, "_blank");
-
-                    alert("¡Cita reservada con éxito! También te contactaremos por WhatsApp.");
-                    form.reset(); // Limpiar formulario
-                })
-                .catch(function (error) {
-                    console.log("FAILED...", error);
-                    alert("Hubo un error al enviar la cita. Intenta nuevamente.");
-                });
+            alert("¡Cita reservada con éxito! También te contactaremos por WhatsApp.");
+            form.reset(); // Limpiar formulario
         });
     });
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-<!-- Formulario de gestionar cita end -->
+
+
         
 
  <!-- Footer Start -->
