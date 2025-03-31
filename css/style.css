@@ -817,5 +817,5 @@ h6,
     margin: 0;
     vertical-align: middle;
     font-weight: bold; /* Hace que el texto se vea más fuerte */
-    --primary: #B78D65; /* Mismo color que antes, pero puedes cambiarlo si quieres */
+    --primary: #00CFE8; /* Mismo color que antes, pero puedes cambiarlo si quieres */
 }
